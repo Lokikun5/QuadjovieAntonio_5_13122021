@@ -72,8 +72,6 @@ const products = [
     "altTxt": "Photo d'un canapé rose, trois places"
   }
 ];
-document.getElementById("items")
-.innerHTML = products.map(products);
 
 exports.find = () => {
   return new Promise((resolve, reject) => resolve(JSON.parse(JSON.stringify(products))));

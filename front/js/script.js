@@ -2,7 +2,7 @@
 let articles = [];
 
 const fetchApi = async () => {
-    await fetch("http://127.0.0.1:3001/api/products/")
+    await fetch("http://127.0.0.1:3000/api/products")
       .then((res) => res.json())
       .then((data) => (articles = data));
   
