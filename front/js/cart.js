@@ -126,157 +126,165 @@ if (location.href.search("confirmation") > 0) {
 
   //------Formulaire utilisateur
 
-  // On récupère nos balises d'input du formulaire
-  inputFirstName = document.querySelectorAll(
-    ".cart__order__form__question input"
-  )[0];
-  inputLastName = document.querySelectorAll(
-    ".cart__order__form__question input"
-  )[1];
-  inputAddress = document.querySelectorAll(
-    ".cart__order__form__question input"
-  )[2];
-  inputCity = document.querySelectorAll(
-    ".cart__order__form__question input"
-  )[3];
-  inputEmail = document.querySelectorAll(
-    ".cart__order__form__question input"
-  )[4];
-  // On récupère aussi les balise qui afficheront les erreurs si il y en a
-  errFirstName = document.querySelectorAll(".cart__order__form__question p")[0];
-  errLastName = document.querySelectorAll(".cart__order__form__question p")[1];
-  errAddress = document.querySelectorAll(".cart__order__form__question p")[2];
-  errCity = document.querySelectorAll(".cart__order__form__question p")[3];
-  errEmail = document.querySelectorAll(".cart__order__form__question p")[4];
-  // On récupère le bouton de soummision du formulaire
-  submitInfo = document.getElementById("order");
-
-  validForm = false;
-  // EventListener qui récupère le prénom
-  inputFirstName.addEventListener("change", (e) => {
-    validFirstName(e.target.value);
-    contact.firstName = e.target.value;
+  let form = document.getElementsByClassName("cart__order__form");
+  let formFirst = document.getElementById("firstName");
+  let formLast = document.getElementById("lastName");
+  let formAdress = document.getElementById("address");
+  let formCity = document.getElementById("city");
+  let formMail = document.getElementById("email");
+  let formValid = document.getElementById("order");
+  
+  // CREATION EXPRESSION REGULIAIRE EMAIL
+  formMail.addEventListener('change', function() {
+      validMail(this)
   });
-  // EventListener qui récupère le nom de famille
-  inputLastName.addEventListener("change", (e) => {
-    validLastName(e.target.value);
-    contact.lastName = e.target.value;
+  const validMail =  function (inputMail){
+      let emailRegExp = new RegExp ('^[a-zA-Z0-9ôöáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._\s-]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$', 'g');
+      let testMail = emailRegExp.test(inputMail.value)
+      if(testMail){
+          formMail.style.boxShadow ='0px 0px 10px #070606'
+          formMail.style.boxSizing = 'border-box'
+          document.getElementById("emailErrorMsg").innerHTML = "Email Valide !"
+          document.getElementById("emailErrorMsg").style.color ='#B0F59A'
+  
+      }else{
+          formMail.style.boxShadow ='0px 0px 10px red'
+          formMail.style.boxSizing = 'border-box'    
+          document.getElementById("emailErrorMsg").innerHTML = `"${inputMail.value} n'est pas valide !"`
+      }    
+  };
+  
+  // CREATION EXPRESSION REGULIAIRE VILLE
+  formCity.addEventListener('change', function() {
+      validCity(this)
   });
-  // EventListener qui récupère l'adresse
-  inputAddress.addEventListener("change", (e) => {
-    validAddress(e.target.value);
-    contact.address = e.target.value;
+  const validCity =  function (inputCity){
+      let villeRegExp = new RegExp ('^[a-zA-Z-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._\s-]*$', 'g');
+      let testVille = villeRegExp.test(inputCity.value)
+      if(testVille){
+          formCity.style.boxShadow ='0px 0px 10px #070606'
+          formCity.style.boxSizing = 'border-box'
+          document.getElementById("cityErrorMsg").innerHTML = "Ville Valide !"
+          document.getElementById("cityErrorMsg").style.color ='#B0F59A'
+  
+      }else{
+          formCity.style.boxShadow ='0px 0px 10px red'
+          formCity.style.boxSizing = 'border-box'
+          document.getElementById("cityErrorMsg").innerHTML = `"${inputCity.value} n'est pas valide !"`
+      }    
+  };
+  
+  // CREATION EXPRESSION REGULIAIRE ADRESSE
+  formAdress.addEventListener('change', function() {
+      validAdress(this)
   });
-  // EventListener qui récupère la ville
-  inputCity.addEventListener("change", (e) => {
-    validCity(e.target.value);
-    contact.city = e.target.value;
+  const validAdress =  function (inputAdress){
+      let AdressRegExp = new RegExp ('^[ a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._\s -]*$', 'g');
+      let testAdress = AdressRegExp.test(inputAdress.value)
+      if(testAdress){
+          formAdress.style.boxShadow ='0px 0px 10px #070606'
+          formAdress.style.boxSizing = 'border-box'
+          document.getElementById("addressErrorMsg").innerHTML = "Adresse Valide !"
+          document.getElementById("addressErrorMsg").style.color ='#B0F59A'
+      }else{
+          formAdress.style.boxShadow ='0px 0px 10px red'
+          formAdress.style.boxSizing = 'border-box'
+          document.getElementById("addressErrorMsg").innerHTML = `"${inputAdress.value} n'est pas valide !"`
+      }    
+  };
+  
+  // CREATION EXPRESSION REGULIAIRE LASTNAME
+  formLast.addEventListener('change', function() {
+      validLast(this)
   });
-  // EventListener qui récupère l'email
-  inputEmail.addEventListener("change", (e) => {
-    validEmail(e.target.value);
-    contact.email = e.target.value;
+  const validLast =  function (inputLast){
+      let LastRegExp = new RegExp ('^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._\s -]*$', 'g');
+      let testLast = LastRegExp.test(inputLast.value)
+      if(testLast){
+          formLast.style.boxShadow ='0px 0px 10px #070606'
+          formLast.style.boxSizing = 'border-box'
+          document.getElementById("lastNameErrorMsg").innerHTML = "Nom Valide !"
+          document.getElementById("lastNameErrorMsg").style.color ='#B0F59A'
+  
+      }else{
+          formLast.style.boxShadow ='0px 0px 10px red'
+          formLast.style.boxSizing = 'border-box'
+          document.getElementById("lastNameErrorMsg").innerHTML = `"${inputLast.value} n'est pas valide !"`
+      }    
+  };
+  
+  // CREATION EXPRESSION REGULIAIRE FIRSTNAME
+  formFirst.addEventListener('change', function() {
+      validFirst(this)
   });
-  // vérifier à l'aide d'une RegExp que le champ prénom ne contiens pas de chiffre
-  function validFirstName(firstName) {
-    if (firstName.length == 0) {
-      errFirstName.innerHTML = "Votre prénom n'est pas renseigné !";
-      validForm = false;
-    } else if (!/[0-9]/.test(firstName)) {
-      errFirstName.innerText = "";
-      validForm = true;
-    } else {
-      errFirstName.innerText = "Votre prénom ne peut pas contenir de chiffre";
-      validForm = false;
-    }
-  }
-  // Fonction qui vérifie à l'aide d'une RegExp que le champ nom ne contiens pas de chiffre
-  function validLastName(lastName) {
-    if (lastName.length == 0) {
-      errLastName.innerHTML = "Votre prénom n'est pas renseigné !";
-      validForm = false;
-    } else if (!/[0-9]/.test(lastName)) {
-      errLastName.innerText = "";
-      validForm = true;
-    } else {
-      errLastName.innerText = "Votre nom ne peut pas contenir de chiffre";
-      return false;
-    }
-  }
-  function validAddress(address) {
-    if (address.length == 0) {
-      errAddress.innerHTML = "Votre adresse n'est pas renseigné !";
-      validForm = false;
-    } else {
-      errAddress.innerHTML = "";
-      validForm = true;
-    }
-  }
-  function validCity(city) {
-    if (city.length == 0) {
-      errCity.innerHTML = "Votre ville n'est pas renseigné !";
-      validForm = false;
-    } else {
-      errCity.innerHTML = "";
-      validForm = true;
-    }
-  }
-  // vérifier le champ email est au format"
-  function validEmail(email) {
-    let emailRegExp = new RegExp(
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-    );
-    if (email.length == 0) {
-      errEmail.innerHTML = "Votre mail n'est pas renseigné !";
-      validForm = false;
-    } else if (emailRegExp.test(email)) {
-      errEmail.innerHTML = "";
-      validForm = true;
-    } else {
-      errEmail.innerHTML = "Votre mail n'est pas valide !";
-      validForm = false;
-    }
-  }
-
-  // Eventlistener qui fonctionne seulement si tout les champs sont correctement rempli
-  submitInfo.addEventListener("click", (e) => {
-    e.preventDefault();
-    // Fonction fetch qui envoie à l'API un objet contenant l'objet 'contact' et le tableau 'products'
-    async function sendData() {
-      await fetch("http://localhost:3000/api/products/order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ contact, products }),
+  const validFirst =  function (inputFirst){
+      let FirstRegExp = new RegExp ('^[a-zA-Z-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._\s -]*$', 'g');
+      let testFirst = FirstRegExp.test(inputFirst.value)
+      if(testFirst){
+          formFirst.style.boxShadow ='0px 0px 10px #070606'
+          formFirst.style.boxSizing = 'border-box'
+          document.getElementById("firstNameErrorMsg").innerHTML = "Prénom Valide !"
+          document.getElementById("firstNameErrorMsg").style.color ='#B0F59A'
+      }else{
+          formFirst.style.boxShadow ='0px 0px 10px red'
+          formFirst.style.boxSizing = 'border-box'
+          document.getElementById("firstNameErrorMsg").innerHTML = `"${inputFirst.value} n'est pas valide !"`
+      }    
+  };
+  
+  // ENVOI DU FORMULAIRE AVEC FETCH
+  formValid.addEventListener("click", function(evt) {
+      evt.preventDefault();
+      if(
+          !formFirst.value ||
+          !formLast.value ||
+          !formAdress.value ||
+          !formCity.value ||
+          !formMail.value
+          
+      ) {
+          const cmd = document.getElementById('order')
+          cmd.setAttribute('value', 'Veuillez remplir tous les champs et cliquer')
+          return evt.preventDefault();
+      }else{
+  
+      
+  const contact = {
+        firstName: `${formFirst.value}`,
+        lastName: `${formLast.value}`,
+        address: `${formAdress.value}`,
+        city: `${formCity.value}`,
+        email: `${formMail.value}`
+      }
+      // let order = JSON.stringify(contact)
+      localStorage.setItem("contact", JSON.stringify(contact));
+  // RECUPERATION DES ID POUR ENVOI FETCH
+      let products = []
+      for(i = 0; i < panier.length; i++){
+          products.push(panier[i].id)
+      }
+  
+      let envoiProducts = {contact, products}
+      console.log(envoiProducts);
+  
+      fetch("http://localhost:3000/api/products/order" , {
+          method: "POST",
+          body: JSON.stringify(envoiProducts),
+          headers: {
+              "content-type" : "application/json",
+          }   
       })
-        // Ensuite on stock la réponse de l'api (orderId)
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data) {
-          orderId = data.orderId;
-        });
-      // SI on a bien obtenu un orderId en réponse on redirige notre utilisateur
-      if (orderId != undefined || orderId != "") {
-        location.href = "confirmation.html?" + orderId;
-        alert("bravo!")
-      }
-    }
-    function collectDatas() {
-      for (let article of panier) {
-        products.push(article.id);
-      }
-    }
-    if (validForm) {
-      collectDatas();
-      sendData();
-    } else {
-      validFirstName(inputFirstName.value);
-      validLastName(inputLastName.value);
-      validAddress(inputAddress.value);
-      validCity(inputCity.value);
-      validEmail(inputEmail.value);
-    }
-  });
+  // POUR AVOIR LE RETOUR SERVEUR    
+      .then(res => {
+          return res.json();
+      }).then((data) => {
+          let orderId = data.orderId
+         window.location.href= `./confirmation.html?id=${orderId}` ; 
+      console.log(orderId);
+      }).catch((error) =>{
+          console.log(error);
+      })
+  }
+  }
+  ); 
 }

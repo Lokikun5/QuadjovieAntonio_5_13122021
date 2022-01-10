@@ -105,7 +105,7 @@ const quantite = document.querySelector('#quantity');
       alert("votre article à est bien été ajouté");
       location.href = "cart.html?";
     }
-  }// si l'entrée est valide
+  }// validation
   ;
 
 }) //event 
