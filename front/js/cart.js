@@ -100,11 +100,11 @@ if (location.href.search("confirmation") > 0) {
   for (let i = 0; i < vignettes.length; i++) {
     let vignette = vignettes[i];
     vignette.addEventListener("input", (e) => {
-      //On envoie la quantité selectionnée dans le panier
+      // envoie la quantité selectionnée dans le panier
       panier[i].quantity = parseInt(e.target.value);
       // On met à jour le localstorage
       localStorage.setItem("panier", JSON.stringify(panier));
-      // on lance la fonction qui va mettre à jour le prix et le total de la page panier
+      // fonction qui va mettre à jour le prix et le total 
       recalc();
     });
   }
@@ -134,7 +134,7 @@ if (location.href.search("confirmation") > 0) {
   let formMail = document.getElementById("email");
   let formValid = document.getElementById("order");
   
-  // CREATION EXPRESSION REGULIAIRE EMAIL
+  // Validation du champ mail
   formMail.addEventListener('change', function() {
       validMail(this)
   });
@@ -154,7 +154,7 @@ if (location.href.search("confirmation") > 0) {
       }    
   };
   
-  // CREATION EXPRESSION REGULIAIRE VILLE
+  // Validation du champ ville
   formCity.addEventListener('change', function() {
       validCity(this)
   });
@@ -174,7 +174,7 @@ if (location.href.search("confirmation") > 0) {
       }    
   };
   
-  // CREATION EXPRESSION REGULIAIRE ADRESSE
+  // Validation du champ adresse
   formAdress.addEventListener('change', function() {
       validAdress(this)
   });
@@ -193,7 +193,7 @@ if (location.href.search("confirmation") > 0) {
       }    
   };
   
-  // CREATION EXPRESSION REGULIAIRE LASTNAME
+  // Validation du champ nom
   formLast.addEventListener('change', function() {
       validLast(this)
   });
@@ -213,7 +213,7 @@ if (location.href.search("confirmation") > 0) {
       }    
   };
   
-  // CREATION EXPRESSION REGULIAIRE FIRSTNAME
+  // Validation du champ prénom
   formFirst.addEventListener('change', function() {
       validFirst(this)
   });
@@ -232,7 +232,7 @@ if (location.href.search("confirmation") > 0) {
       }    
   };
   
-  // ENVOI DU FORMULAIRE AVEC FETCH
+  // ENVOI DU FORMULAIRE
   formValid.addEventListener("click", function(evt) {
       evt.preventDefault();
       if(
@@ -256,9 +256,9 @@ if (location.href.search("confirmation") > 0) {
         city: `${formCity.value}`,
         email: `${formMail.value}`
       }
-      // let order = JSON.stringify(contact)
+      
       localStorage.setItem("contact", JSON.stringify(contact));
-  // RECUPERATION DES ID POUR ENVOI FETCH
+  // RECUPERATION DES ID
       let products = []
       for(i = 0; i < panier.length; i++){
           products.push(panier[i].id)
@@ -274,7 +274,7 @@ if (location.href.search("confirmation") > 0) {
               "content-type" : "application/json",
           }   
       })
-  // POUR AVOIR LE RETOUR SERVEUR    
+  // LE RETOUR SERVEUR    
       .then(res => {
           return res.json();
       }).then((data) => {
